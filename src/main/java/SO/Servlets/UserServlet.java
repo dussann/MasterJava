@@ -44,7 +44,7 @@ public class UserServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// this.logOut(request, response);
+		
 		String cmd = request.getParameter("cmd");
 		switch (cmd) {
 		case "logout":
@@ -52,11 +52,25 @@ public class UserServlet extends HttpServlet {
 			break;
 		case "registration":
 			this.registration(request, response);
+			break;
+		case "registrationRedirect":
+			this.registrationRedirect(request, response);
+			break;
 		case "home":
 			this.setHomeScreenForUser(request, response);
 		default:
 			break;
 		}
+	}
+
+	private void registrationRedirect(HttpServletRequest request, HttpServletResponse response) {
+		
+		try {			
+			request.getRequestDispatcher("registration.jsp").forward(request, response);
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	/**
@@ -107,6 +121,7 @@ public class UserServlet extends HttpServlet {
 	}
 
 	private void setHomeScreenForUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("home screen fro user");
 		ArrayList<Question> questions = new ArrayList<Question>();
 		int userId = (int) request.getSession().getAttribute("userId");
 		User user = userDao.getUserById(userId);

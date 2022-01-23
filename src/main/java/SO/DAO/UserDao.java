@@ -63,6 +63,8 @@ public class UserDao {
 			Query<?> query = session.createQuery(hql);
 			query.setParameter("password", password);
 			user = (User) this.getSingleResultHelper(query);
+			System.out.println(user.getFirstName());
+			System.out.println("==============");
 			if ((user != null) && (user.getUserName().equals(userName))) {
 				return user.getUserId();
 			}

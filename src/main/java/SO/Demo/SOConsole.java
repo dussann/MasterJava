@@ -2,10 +2,12 @@ package SO.Demo;
 
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import SO.Model.Question;
 import SO.Model.User;
 import SO.Utils.HibernateUtil;
 
@@ -19,68 +21,137 @@ public class SOConsole {
 
 	// StatisticsImpl
 	public static void main(String[] args) {
-		//InsertUser();
-		//CreateUser();
-		ReadUser();
-		// ReadAllUsers();
+
+		 CreateUser();
+		// ReadUser();
 		// UpdateUser();
+		// DeleteUser();
+		//CreateUsers1000();
+		// ReadAllUsers();
+
 		// ReadAllUsers();
 	}
-	public static void InsertUser() {
+
+	private static void CreateUsers1000() {
+		//User user;
 		Transaction transaction = null;
+		long start, end;
+
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			transaction = session.beginTransaction();
-			User user = new User("Johnnnnn", "Doe", "New Zeland", "QA", "123");
-			int userId = (int)session.save(user);
+			start = System.currentTimeMillis();
+			for (int i = 0; i < 10; i++) {
+				User user = new User("bc", "b", "Island", "Java", "123");
+			
+				session.save(user);
+//				if(i%25==0) {					
+//					session.flush();
+//					session.clear();
+//					//System.out.println("************flush***************");
+//				}
+				
+			}
 			transaction.commit();
-		
-		} catch(Exception ex){
+			end = System.currentTimeMillis();
+			System.out.println(end - start);
+			System.out.println("**************create user***************ms************************************");
+		} catch (HibernateException ex) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
 			ex.printStackTrace();
 		}
 	}
-	public static void CreateUser() {
+
+	static void CreateUser() {
+		User user;
 		Transaction transaction = null;
+
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			transaction = session.beginTransaction();
-			User user = new User("John", "Doe", "New Zeland", "QA", "123");
+			user = new User("John", "Doe", "New Zeland", "QA", "123");
 			long start = System.currentTimeMillis();
 			session.save(user);
+			transaction.commit();
 			long end = System.currentTimeMillis();
 			System.out.println(end - start);
 			System.out.println("**************create user***************ms************************************");
-
-			transaction.commit();
-		} catch (Exception ex) {
+		} catch (HibernateException ex) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
 			ex.printStackTrace();
 		}
 	}
-	
+
 	static void ReadUser() {
+		User user = null;
 		Transaction transaction = null;
 
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			transaction = session.beginTransaction();
 			long start = System.currentTimeMillis();
-			List<User> users = session.createQuery("from User u where u.userId=3", User.class).getResultList();
+			// load has better performance then get
+			user = session.load(User.class, 1);
+			transaction.commit();
 			long end = System.currentTimeMillis();
 			System.out.println(end - start);
-			System.out.println("*************read user***************ms************************************");
-			transaction.commit();
-			session.close();
+			System.out.println("*************read user***************ms************************************"
+					+ user.getFirstName());
 
-		} catch (Exception ex) {
+		} catch (HibernateException ex) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
 			ex.printStackTrace();
 		}
 	}
+
+	static void UpdateUser() {
+		User user = null;
+		Transaction transaction = null;
+
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			transaction = session.beginTransaction();
+			user = session.get(User.class, 1);
+			user.setJobTitle("aaaaaaaa");
+			long start = System.currentTimeMillis();
+			session.update(user);
+			transaction.commit();
+			long end = System.currentTimeMillis();
+			System.out.println(end - start);
+			System.out.println("*************update user2***************ms************************************");
+		} catch (HibernateException ex) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			ex.printStackTrace();
+		}
+	}
+
+	static void DeleteUser() {
+		User user = null;
+		Transaction transaction = null;
+
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			transaction = session.beginTransaction();
+			user = new User();
+			user.setUserId(16);
+			long start = System.currentTimeMillis();
+			session.delete(user);
+			transaction.commit();
+			long end = System.currentTimeMillis();
+			System.out.println(end - start);
+			System.out.println("*************delete user***************ms************************************");
+		} catch (HibernateException ex) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			ex.printStackTrace();
+		}
+
+	}
+
 	public static void CreateUsers() {
 		Transaction transaction = null;
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -100,8 +171,6 @@ public class SOConsole {
 		}
 	}
 
-	
-
 	static void ReadAllUsers() {
 		Transaction transaction = null;
 
@@ -120,19 +189,4 @@ public class SOConsole {
 		}
 	}
 
-	static void UpdateUser() {
-		Transaction transaction = null;
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-			transaction = session.beginTransaction();
-			Query query = session.createQuery("update User u set u.jobTitle='aa' where u.userId=2");
-			long start = System.currentTimeMillis();
-			query.executeUpdate();
-			long end = System.currentTimeMillis();
-			System.out.println(end - start);
-			System.out.println("*****************************ms************************************");
-			transaction.commit();
-			session.close();
-		}
-
-	}
 }
