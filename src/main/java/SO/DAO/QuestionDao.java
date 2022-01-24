@@ -20,7 +20,7 @@ public class QuestionDao {
 			transaction = session.beginTransaction();
 			Question question = new Question(header, content);
 			question.setUser(user);
-			session.save(question);
+			Object a = session.save(question);
 			transaction.commit();
 			session.close();
 		} catch (Exception ex) {

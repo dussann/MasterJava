@@ -12,7 +12,7 @@
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
 <body>
-	<%@include file="header.jsp"%>
+	<%@include file="../header.jsp"%>
 	<div class="container">
 		<h1>Create</h1>
 
@@ -20,12 +20,12 @@
 		<hr />
 		<div class="row">
 			<div class="col-md-4">
-				<form action="<%=request.getContextPath()%>/QuestionServlet">
+				<form action="<%=request.getContextPath()%>/QuestionServlet" method="post">
 
 					<div class="form-group">
-						<label class="control-label">Header</label> <input
-							class="form-control" /> <input type="hidden" value="create"
-							name="cmd" />
+						<label class="control-label">Header</label>
+						<input name="header" class="form-control" />
+						<input type="hidden" value="create" name="cmd" />
 					</div>
 					<div class="form-group">
 						<label class="control-label">Content</label>

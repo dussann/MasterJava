@@ -13,27 +13,28 @@
 	crossorigin="anonymous">
 </head>
 <body>
-	<%@include file="header.jsp" %>
-	<div>
-		<h1>Welcome ${userName}</h1>
-		<a href="<%=request.getContextPath()%>/UserServlet?cmd=logout">Log
-			out</a>
-	</div>
+	<%@include file="header.jsp"%>
+	<div class="container">
+		<div>
+			<h1>Welcome ${userName}</h1>
+			<%-- <a href="<%=request.getContextPath()%>/UserServlet?cmd=logout">Log out</a> --%>
+		</div>
 
-	<a href="createQuestion.jsp"><h3>Ask question</h3></a>
-	<table border="1" cellpadding="2" cellspacing="2">
-		<tr>
-			<th>Questions</th>
-		</tr>
-		<c:forEach var="questions" items="${questions }">
+		<a href="Questions/createQuestion.jsp"><h3>Ask question</h3></a>
+		<table class="table">
 			<tr>
-				<td><h3>${questions.header }</h3></td>
-				<td><a
-					href="<%=request.getContextPath()%>/QuestionServlet?details=${questions.questionId }&cmd=details">Details</a></td>
-				<td><a
-					href="<%=request.getContextPath()%>/QuestionServlet?delete=${questions.questionId }&cmd=delete">Delete</a></td>
+				<th>Questions</th>
 			</tr>
-		</c:forEach>
-	</table>
+			<c:forEach var="questions" items="${questions }">
+				<tr>
+					<td><h3>${questions.header }</h3></td>
+					<td><a
+						href="<%=request.getContextPath()%>/QuestionServlet?details=${questions.questionId }&cmd=details">Details</a></td>
+					<td><a
+						href="<%=request.getContextPath()%>/QuestionServlet?delete=${questions.questionId }&cmd=delete">Delete</a></td>
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
 </body>
 </html>
