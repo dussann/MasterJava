@@ -13,14 +13,13 @@
 	crossorigin="anonymous">
 </head>
 <body>
-	<%@include file="header.jsp"%>
+	<%@include file="../header.jsp"%>
 	<div class="container">
 		<div>
 			<h1>Welcome ${userName}</h1>
-			<%-- <a href="<%=request.getContextPath()%>/UserServlet?cmd=logout">Log out</a> --%>
 		</div>
 
-		<a href="Questions/createQuestion.jsp"><h3>Ask question</h3></a>
+		<a href="Question/createQuestion.jsp"><h3>Ask question</h3></a>
 		<table class="table">
 			<tr>
 				<th>Questions</th>

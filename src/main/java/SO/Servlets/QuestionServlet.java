@@ -37,8 +37,7 @@ public class QuestionServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String action = request.getParameter("cmd");
-
+		String action = request.getParameter("cmd");		
 		if (action.equals("delete")) {
 			Integer questionIdDelete = Integer.parseInt(request.getParameter("delete"));
 			this.deleteQuestion(request, response, questionIdDelete);
@@ -73,7 +72,7 @@ public class QuestionServlet extends HttpServlet {
 			this.questionDao.createQuestion(header, content, user);
 			questions = questionDao.getAllQuestions();
 			request.setAttribute("questions", questions);
-			request.getRequestDispatcher("home.jsp").forward(request, response);
+			request.getRequestDispatcher("User/home.jsp").forward(request, response);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -92,7 +91,7 @@ public class QuestionServlet extends HttpServlet {
 			this.questionDao.deleteQuestion(questionId);
 			questions = questionDao.getAllQuestions();
 			request.setAttribute("questions", questions);
-			request.getRequestDispatcher("home.jsp").forward(request, response);
+			request.getRequestDispatcher("User/home.jsp").forward(request, response);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -109,7 +108,7 @@ public class QuestionServlet extends HttpServlet {
 		request.getSession().setAttribute("questionContent", question.getContent());
 		ArrayList<Answer> answers = this.answerDao.getAllAnswersForQuestion(questionId);
 		request.setAttribute("answers", answers);
-		request.getRequestDispatcher("questionDetail.jsp").forward(request, response);
+		request.getRequestDispatcher("Question/questionDetail.jsp").forward(request, response);
 	}
 
 }

@@ -40,24 +40,10 @@
 		</div>
 		<br />
 		<div>
-			<a href="">Back to List</a>
+			<a href="../UserServlet?cmd=home">Back to List</a>
 		</div>
 	</div>
 
-	<%-- <form action="<%=request.getContextPath()%>/QuestionServlet"
-		method="post">
-		<table style="with: 50%">
-			<tr>
-				<td>Header</td>
-				<td><input type="text" name="header" /></td>
-				<input type="hidden" value="create" name="cmd" />
-			</tr>
-			<tr>
-				<td>Content</td>
-				<td><textarea name="content"></textarea></td>
-			</tr>
-		</table>
-		<input type="submit" value="Submit" />
-	</form> --%>
+
 </body>
 </html>

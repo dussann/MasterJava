@@ -111,7 +111,7 @@ public class UserServlet extends HttpServlet {
 				request.setAttribute("questions", questions);
 				request.setAttribute("userName", userName);
 				request.getSession().setAttribute("userId", userId);
-				request.getRequestDispatcher("home.jsp").forward(request, response);
+				request.getRequestDispatcher("User/home.jsp").forward(request, response);
 			} else {
 				request.getRequestDispatcher("indexError.jsp").forward(request, response);
 			}
@@ -121,7 +121,7 @@ public class UserServlet extends HttpServlet {
 	}
 
 	private void setHomeScreenForUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("home screen fro user");
+
 		ArrayList<Question> questions = new ArrayList<Question>();
 		int userId = (int) request.getSession().getAttribute("userId");
 		User user = userDao.getUserById(userId);
@@ -129,7 +129,7 @@ public class UserServlet extends HttpServlet {
 		request.setAttribute("questions", questions);
 		request.setAttribute("userName", user.getUserName());
 		
-		request.getRequestDispatcher("home.jsp").forward(request, response);
+		request.getRequestDispatcher("User/home.jsp").forward(request, response);
 
 	}
 

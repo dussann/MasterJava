@@ -122,8 +122,10 @@ public class AnswerServlet extends HttpServlet {
 
 		this.answerDao.createAnswer(question, answer, user);
 		ArrayList<Answer> answers = this.answerDao.getAllAnswersForQuestion(questionId);
+		System.out.println(answer.length());
+		System.out.println("******");
 		request.setAttribute("answers", answers);
-		request.getRequestDispatcher("questionDetail.jsp").forward(request, response);
+		request.getRequestDispatcher("Question/questionDetail.jsp").forward(request, response);
 
 	}
 
