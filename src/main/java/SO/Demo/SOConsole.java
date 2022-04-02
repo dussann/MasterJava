@@ -96,7 +96,7 @@ public class SOConsole {
 			transaction.commit();
 			long end = System.currentTimeMillis();
 			System.out.println(end - start);
-			System.out.println("*************read user***************ms************************************"+ user.getFirstName());
+			System.out.println("*************read user***************ms***********************************"+ user.getFirstName());
 
 		} catch (HibernateException ex) {
 			if (transaction != null) {
