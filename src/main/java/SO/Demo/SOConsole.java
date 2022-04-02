@@ -14,7 +14,7 @@ import SO.Utils.HibernateUtil;
 public class SOConsole {
 
 	/*
-	 * Hibernate’s statistics component collects a lot of internal statistics and
+	 * Hibernateï¿½s statistics component collects a lot of internal statistics and
 	 * writes some of them to the log file. One of them is the execution time for
 	 * each query. You can activate these messages in 2 steps. You need to:
 	 */
@@ -22,8 +22,8 @@ public class SOConsole {
 	// StatisticsImpl
 	public static void main(String[] args) {
 
-		 CreateUser();
-		// ReadUser();
+		 // CreateUser();
+		ReadUser();
 		// UpdateUser();
 		// DeleteUser();
 		//CreateUsers1000();
@@ -91,13 +91,12 @@ public class SOConsole {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			transaction = session.beginTransaction();
 			long start = System.currentTimeMillis();
-			// load has better performance then get
+			// load has better performance then get(because load is lazy loading and get is eager loading)
 			user = session.load(User.class, 1);
 			transaction.commit();
 			long end = System.currentTimeMillis();
 			System.out.println(end - start);
-			System.out.println("*************read user***************ms************************************"
-					+ user.getFirstName());
+			System.out.println("*************read user***************ms************************************"+ user.getFirstName());
 
 		} catch (HibernateException ex) {
 			if (transaction != null) {
