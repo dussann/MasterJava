@@ -91,7 +91,7 @@ public class SOConsole {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			transaction = session.beginTransaction();
 			long start = System.currentTimeMillis();
-			// load has better performance then get(because load is lazy loading and get is eager loading )
+			// load has better performance then get(because load is lazy loading and get is eager loading)
 			user = session.load(User.class, 1);
 			transaction.commit();
 			long end = System.currentTimeMillis();
