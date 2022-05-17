@@ -101,7 +101,7 @@ public class UserServlet extends HttpServlet {
 	}
 
 	public void logIn(HttpServletRequest request, HttpServletResponse response) {
-		try {
+		try {			
 			ArrayList<Question> questions = new ArrayList<Question>();
 			String userName = request.getParameter("userName");
 			String password = request.getParameter("password");
