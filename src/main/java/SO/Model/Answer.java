@@ -29,7 +29,7 @@ public class Answer {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int answerId;
 	@ManyToOne
 	@JoinColumn(name = "userId")

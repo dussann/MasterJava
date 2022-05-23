@@ -9,6 +9,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+
 
 @Entity
 public class Question {
@@ -22,13 +30,15 @@ public class Question {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "question-generator")
+	@SequenceGenerator(name = "question-generator",sequenceName = "ques_seq")
 	private int questionId;
 	private String header;
 	private String content;
 
-	@ManyToOne
+	@ManyToOne	
 	@JoinColumn(name = "userId")
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private User user;
 
 	@OneToMany(mappedBy = "question")

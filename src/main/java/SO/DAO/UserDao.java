@@ -2,6 +2,7 @@ package SO.DAO;
 
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -54,6 +55,43 @@ public class UserDao {
 
 	}
 
+	public int login1(String userName, String password) {
+	
+		long start, end;
+		int batchSize = 5;
+		int n=15;
+		Transaction transaction = null;
+		
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			session.unwrap(Session.class).setJdbcBatchSize(batchSize);
+			transaction = session.beginTransaction();
+			start = System.currentTimeMillis();
+			for (int i = 0; i < n; i++) {
+				session.save(new User("Java", "Hibernate", "Serbia", "Java", "123"));
+				// session.save(new Question("Question header", "Question content"));
+				if ((i > 0) && (i % batchSize == 0)) {
+					session.flush(); // object will be sent to the database flush() will synchronize your database
+										// with the current state of object/objects held in the memory but it does not
+										// commit the transaction
+					session.clear(); // remove all objects from system cache
+				}
+			}
+			transaction.commit(); // by default has flush that mean data is send to database and unit of work is
+									// finished
+			end = System.currentTimeMillis();
+			System.out.println(end - start + " ms");
+			
+
+		} catch (HibernateException ex) {
+			System.out.println("ERRORRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			ex.printStackTrace();
+		}
+		return 1;
+	}
+	
 	public int login(String userName, String password) {
 		Transaction transaction = null;
 		User user = null;
@@ -62,9 +100,7 @@ public class UserDao {
 			String hql = "from User U where U.password=:password";
 			Query<?> query = session.createQuery(hql);
 			query.setParameter("password", password);
-			user = (User) this.getSingleResultHelper(query);
-			System.out.println(user.getFirstName());
-			System.out.println("==============");
+			user = (User) this.getSingleResultHelper(query);			
 			if ((user != null) && (user.getUserName().equals(userName))) {
 				return user.getUserId();
 			}

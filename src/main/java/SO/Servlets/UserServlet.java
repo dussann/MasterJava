@@ -119,7 +119,7 @@ public class UserServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
+	
 	private void setHomeScreenForUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		ArrayList<Question> questions = new ArrayList<Question>();
